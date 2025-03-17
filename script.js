@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize bank logos slider
-    if ($('.logos-slide').length) {
-        $('.logos-slide').slick({
+    if ($('.slider').length) {
+        $('.slider').slick({
             slidesToShow: 6,
             slidesToScroll: 1,
             autoplay: true,
@@ -9,19 +9,17 @@ document.addEventListener('DOMContentLoaded', function() {
             arrows: false,
             dots: false,
             pauseOnHover: false,
-            infinite: true,
-            cssEase: 'linear',
             responsive: [
                 {
                     breakpoint: 768,
                     settings: {
-                        slidesToShow: 4
+                        slidesToShow: 3
                     }
                 },
                 {
                     breakpoint: 520,
                     settings: {
-                        slidesToShow: 3
+                        slidesToShow: 2
                     }
                 }
             ]
