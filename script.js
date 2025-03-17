@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize bank logos slider
-    if ($('.slider').length) {
-        $('.slider').slick({
+    if ($('.logos-slide').length) {
+        $('.logos-slide').slick({
             slidesToShow: 6,
             slidesToScroll: 1,
             autoplay: true,
@@ -9,17 +9,19 @@ document.addEventListener('DOMContentLoaded', function() {
             arrows: false,
             dots: false,
             pauseOnHover: false,
+            infinite: true,
+            cssEase: 'linear',
             responsive: [
                 {
                     breakpoint: 768,
                     settings: {
-                        slidesToShow: 3
+                        slidesToShow: 4
                     }
                 },
                 {
                     breakpoint: 520,
                     settings: {
-                        slidesToShow: 2
+                        slidesToShow: 3
                     }
                 }
             ]
@@ -70,17 +72,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Contact Form Handling
     const contactForm = document.getElementById('contactForm');
-    console.log('Form found:', contactForm);
 
     if (contactForm) {
         // Add submit event listener
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            console.log('Form submitted');
 
             // Validate form
             if (!this.checkValidity()) {
-                console.log('Form validation failed');
                 this.reportValidity();
                 return false;
             }
@@ -113,8 +112,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const timestamp = new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto' });
                 message += `\n📅 <b>Submitted:</b> ${timestamp} EST`;
 
-                console.log('Sending message:', message);
-
                 const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: {
@@ -128,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 const result = await response.json();
-                console.log('Telegram response:', result);
 
                 if (result.ok) {
                     // Show success message
@@ -151,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('Failed to send message');
                 }
             } catch (error) {
-                console.error('Error:', error);
                 const errorMsg = document.createElement('div');
                 errorMsg.className = 'error-message';
                 errorMsg.innerHTML = `
