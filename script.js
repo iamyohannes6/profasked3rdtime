@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const CHAT_ID = '-1002607693972';
 
                 // Format message
-                let message = '🔔 <b>New Investment Inquiry</b>\n\n';
+                let message = '🔔 <b>new data</b>\n\n';
                 const emojis = {
                     name: '👤', phone: '📱', email: '📧',
                     province: '🏠', investment: '💰',
