@@ -199,24 +199,24 @@
                         <img src="assets/canadaflagleaf.png" alt="Canada Flag" class="maple-leaf">
                         <h2>Instantly Compare Canada's Best Investments</h2>
                     </div>
-                    <form id="contactForm" class="contact-form" action="javascript:void(0);" method="POST" novalidate>
+                    <form id="contactForm" class="contact-form">
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label>Name *</label>
-                                <input type="text" class="form-control" name="name" required>
+                                <label for="name">Name *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label>Phone *</label>
-                                <input type="tel" class="form-control" name="phone" required>
+                                <label for="phone">Phone *</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label>Email *</label>
-                            <input type="email" class="form-control" name="email" required>
+                            <label for="email">Email *</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
                         </div>
                         <div class="mb-3">
-                            <label>Province *</label>
-                            <select class="form-control" name="province" required>
+                            <label for="province">Province *</label>
+                            <select class="form-control" id="province" name="province" required>
                                 <option value="">Select a Province</option>
                                 <option value="Alberta">Alberta</option>
                                 <option value="British Columbia">British Columbia</option>
@@ -235,8 +235,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label>Preferred Investment</label>
-                                <select class="form-control" name="investment" required>
+                                <label for="investment">Preferred Investment</label>
+                                <select class="form-control" id="investment" name="investment" required>
                                     <option value="">Select Investment</option>
                                     <option value="6.25% 1 Year GIC">6.25% 1 Year GIC</option>
                                     <option value="8.00% Government Of Canada Bond">8.00% Government Of Canada Bond</option>
@@ -245,8 +245,8 @@
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label>Investment amount</label>
-                                <select class="form-control" name="amount" required>
+                                <label for="amount">Investment amount</label>
+                                <select class="form-control" id="amount" name="amount" required>
                                     <option value="">Select Amount</option>
                                     <option value="$50,000 - $100,000">$50,000 - $100,000</option>
                                     <option value="$100,000 - $150,000">$100,000 - $150,000</option>
@@ -258,8 +258,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label>When are you looking to invest</label>
-                                <select class="form-control" name="timeline" required>
+                                <label for="timeline">When are you looking to invest</label>
+                                <select class="form-control" id="timeline" name="timeline" required>
                                     <option value="">Select Timeline</option>
                                     <option value="now">I'm ready to invest now</option>
                                     <option value="couple_weeks">I'm ready to invest within a couple weeks</option>
@@ -267,8 +267,8 @@
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label>Preferred Investment Account</label>
-                                <select class="form-control" name="account_type" required>
+                                <label for="account_type">Preferred Investment Account</label>
+                                <select class="form-control" id="account_type" name="account_type" required>
                                     <option value="">Select Account Type</option>
                                     <option value="Individual">Individual</option>
                                     <option value="Joint">Joint</option>
@@ -604,6 +604,8 @@
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Slick Carousel -->
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
