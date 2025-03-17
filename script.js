@@ -79,10 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const CHAT_ID = '-1002607693972';
 
     if (contactForm) {
+        console.log('Form found and listener attached');
         contactForm.addEventListener('submit', handleSubmit);
+    } else {
+        console.error('Contact form not found in DOM');
     }
 
     async function handleSubmit(e) {
+        console.log('Form submission started');
         e.preventDefault(); // Prevent form from submitting normally
         
         // Show loading state
@@ -90,10 +94,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const originalButtonText = submitButton.innerHTML;
         submitButton.disabled = true;
         submitButton.innerHTML = 'Sending...';
+        console.log('Submit button disabled and text updated');
 
         try {
             // Collect form data
             const formData = new FormData(this);
+            console.log('Form data collected:', Object.fromEntries(formData));
+            
             let message = '<b>🔔 New Investment Inquiry</b>\n\n';
             
             // Build message with emojis and formatting
@@ -119,6 +126,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const timestamp = new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto' });
             message += `\n📅 <b>Submitted:</b> ${timestamp} EST`;
 
+            console.log('Formatted message:', message);
+            console.log('Attempting to send to Telegram...');
+
+            // Log the request details
+            console.log('Request URL:', `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`);
+            console.log('Request body:', {
+                chat_id: CHAT_ID,
+                text: message,
+                parse_mode: 'HTML'
+            });
+
             // Send to Telegram
             const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
@@ -132,13 +150,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
             });
 
+            console.log('Telegram API response status:', response.status);
+            const responseData = await response.json();
+            console.log('Telegram API response:', responseData);
+
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
             }
 
-            const data = await response.json();
-
-            if (data.ok) {
+            if (responseData.ok) {
+                console.log('Message sent successfully to Telegram');
                 // Show success message
                 const successMessage = document.createElement('div');
                 successMessage.className = 'success-message';
@@ -154,16 +175,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Reset form
                 this.reset();
+                console.log('Form reset and success message shown');
 
                 // Hide success message after 5 seconds
                 setTimeout(() => {
                     successMessage.style.display = 'none';
+                    console.log('Success message hidden');
                 }, 5000);
             } else {
-                throw new Error('Telegram API Error');
+                throw new Error(`Telegram API Error: ${responseData.description || 'Unknown error'}`);
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error details:', error);
             // Show error message
             const errorMessage = document.createElement('div');
             errorMessage.className = 'error-message';
@@ -176,13 +199,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span>Sorry, there was an error. Please try again later.</span>
                 </div>`;
             this.insertBefore(errorMessage, this.firstChild);
+            console.log('Error message shown');
             setTimeout(() => {
                 errorMessage.remove();
+                console.log('Error message removed');
             }, 5000);
         } finally {
             // Restore button state
             submitButton.disabled = false;
             submitButton.innerHTML = originalButtonText;
+            console.log('Submit button restored');
         }
 
         return false; // Prevent form from submitting
