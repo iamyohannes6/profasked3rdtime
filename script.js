@@ -78,9 +78,41 @@ document.addEventListener('DOMContentLoaded', function() {
     const BOT_TOKEN = '8107565320:AAFrQTEp2do-P7_qTmR2XSV0U-loFi7j02M';
     const CHAT_ID = '-1002607693972';
 
+    // Debug form existence
+    console.log('Form element:', contactForm);
+
     if (contactForm) {
         console.log('Form found and listener attached');
-        contactForm.addEventListener('submit', handleSubmit);
+        
+        // Add click handler to submit button for immediate feedback
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        console.log('Submit button:', submitButton);
+
+        if (submitButton) {
+            submitButton.addEventListener('click', function(e) {
+                console.log('Submit button clicked');
+            });
+        }
+
+        // Add both submit and click handlers to the form
+        contactForm.addEventListener('submit', function(e) {
+            console.log('Form submit event triggered');
+            handleSubmit.call(this, e);
+        });
+
+        // Add validation feedback
+        const inputs = contactForm.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('invalid', function(e) {
+                console.log('Invalid input:', input.name);
+                e.preventDefault();
+                this.classList.add('is-invalid');
+            });
+
+            input.addEventListener('input', function() {
+                this.classList.remove('is-invalid');
+            });
+        });
     } else {
         console.error('Contact form not found in DOM');
     }
@@ -88,6 +120,16 @@ document.addEventListener('DOMContentLoaded', function() {
     async function handleSubmit(e) {
         console.log('Form submission started');
         e.preventDefault(); // Prevent form from submitting normally
+        
+        // Validate form
+        const isValid = this.checkValidity();
+        console.log('Form validity:', isValid);
+
+        if (!isValid) {
+            console.log('Form validation failed');
+            this.reportValidity();
+            return false;
+        }
         
         // Show loading state
         const submitButton = this.querySelector('button[type="submit"]');
@@ -187,6 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('Error details:', error);
+            console.error('Error stack:', error.stack);
             // Show error message
             const errorMessage = document.createElement('div');
             errorMessage.className = 'error-message';
