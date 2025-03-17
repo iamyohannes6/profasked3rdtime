@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             arrows: false,
             dots: false,
             pauseOnHover: false,
+            infinite: true,
             responsive: [
                 {
                     breakpoint: 768,
@@ -26,20 +27,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Logo slider animation
+    // Logo slider animation with infinite scroll
     const logoSlide = document.querySelector('.logos-slide');
     if (logoSlide) {
+        const cloneLogos = () => {
+            const logos = logoSlide.children;
+            const logosArray = Array.from(logos);
+            
+            // Only clone if we haven't already cloned
+            if (logosArray.length === 12) { // Original number of logos
+                logosArray.forEach(logo => {
+                    const clone = logo.cloneNode(true);
+                    logoSlide.appendChild(clone);
+                });
+            }
+        };
+
         let scrollPosition = 0;
         const scrollSpeed = 0.5;
         
         function slideLogos() {
             scrollPosition -= scrollSpeed;
-            if (Math.abs(scrollPosition) >= logoSlide.offsetWidth / 2) {
+            const maxScroll = -logoSlide.offsetWidth / 2;
+            
+            if (Math.abs(scrollPosition) >= Math.abs(maxScroll)) {
                 scrollPosition = 0;
             }
+            
             logoSlide.style.transform = `translateX(${scrollPosition}px)`;
             requestAnimationFrame(slideLogos);
         }
+
+        // Clone logos and start animation
+        cloneLogos();
         slideLogos();
     }
 
